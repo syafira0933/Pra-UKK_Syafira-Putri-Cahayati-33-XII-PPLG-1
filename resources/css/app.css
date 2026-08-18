@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatSlow {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(122, 75, 42, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 0 8px rgba(122, 75, 42, 0);
+    }
+}
+
+@keyframes orbMoveOne {
+
+    0%,
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    50% {
+        transform: translate(50px, -30px) scale(1.2);
+    }
+}
+
+@keyframes orbMoveTwo {
+
+    0%,
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    50% {
+        transform: translate(-40px, 40px) scale(1.15);
+    }
+}
+
+@keyframes sparkleTwinkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: scale(0.6) rotate(0deg);
+    }
+
+    50% {
+        opacity: 0.95;
+        transform: scale(1.25) rotate(45deg);
+    }
+}
+
+@keyframes beamSweep {
+
+    0%,
+    100% {
+        transform: rotate(-5deg) scaleY(1);
+        opacity: 0.35;
+    }
+
+    50% {
+        transform: rotate(5deg) scaleY(1.1);
+        opacity: 0.65;
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+    animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+    animation: pulseGlow 2.5s infinite;
+}
+
+.animate-orb-1 {
+    animation: orbMoveOne 9s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+    animation: orbMoveTwo 11s ease-in-out infinite;
+}
+
+.animate-sparkle-1 {
+    animation: sparkleTwinkle 2.5s ease-in-out infinite;
+}
+
+.animate-sparkle-2 {
+    animation: sparkleTwinkle 3.8s ease-in-out infinite 0.7s;
+}
+
+.animate-sparkle-3 {
+    animation: sparkleTwinkle 3.1s ease-in-out infinite 1.4s;
+}
+
+.animate-sparkle-4 {
+    animation: sparkleTwinkle 4.2s ease-in-out infinite 2.1s;
+}
+
+.animate-beam {
+    animation: beamSweep 10s ease-in-out infinite;
+}
+
+.card-hover-effect {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -6px rgba(74, 46, 31, 0.12);
+}
