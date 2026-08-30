@@ -85,6 +85,10 @@ Flowchart manual menggambarkan alur fisik interaksi pelanggan yang datang langsu
   - `bookings` -- < `memilih` > -- `services` (N to 1)
 
 #### B. Physical Data Model (PDM) & Structure
+- **Relasi Tabel PDM**:
+  - Tabel `USERS` memiliki relasi *one-to-many* dengan `BOOKINGS` melalui *foreign key* `user_id` (satu pelanggan dapat membuat banyak booking).
+  - Tabel `SERVICES` memiliki relasi *one-to-many* dengan `BOOKINGS` melalui *foreign key* `service_id` (satu jenis layanan dapat dipilih dalam banyak transaksi booking).
+
 1. **`USERS` Table**:
    - `id` (PK, BIGINT 20)
    - `name` (VARCHAR 255)
