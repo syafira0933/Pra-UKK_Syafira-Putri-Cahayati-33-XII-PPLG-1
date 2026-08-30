@@ -15,91 +15,102 @@
 }
 
 @keyframes floatSlow {
-
-    0%,
-    100% {
-        transform: translateY(0px) rotate(0deg);
+    0%, 100% {
+        transform: translateY(0px);
     }
-
     50% {
-        transform: translateY(-10px) rotate(5deg);
+        transform: translateY(-6px);
     }
 }
 
-@keyframes pulseGlow {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(122, 75, 42, 0.3);
-    }
-
-    50% {
-        box-shadow: 0 0 0 8px rgba(122, 75, 42, 0);
-    }
+.animate-float {
+    animation: floatSlow 5s ease-in-out infinite;
 }
 
-@keyframes orbMoveOne {
-
-    0%,
-    100% {
-        transform: translate(0px, 0px) scale(1);
-    }
-
-    50% {
-        transform: translate(50px, -30px) scale(1.2);
-    }
+.card-hover-effect {
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes orbMoveTwo {
-
-    0%,
-    100% {
-        transform: translate(0px, 0px) scale(1);
-    }
-
-    50% {
-        transform: translate(-40px, 40px) scale(1.15);
-    }
+.card-hover-effect::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.45), rgba(122, 75, 42, 0.15) 50%, transparent 80%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
+.card-hover-effect:hover::before {
+    opacity: 1;
+}
+
+.card-hover-effect:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px -8px rgba(122, 75, 42, 0.14), 0 0 24px -4px rgba(212, 175, 55, 0.12);
+}
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Background Bling-Bling Twinkle Sparkle Animations */
 @keyframes sparkleTwinkle {
-
-    0%,
-    100% {
-        opacity: 0.2;
-        transform: scale(0.6) rotate(0deg);
+    0%, 100% {
+        opacity: 0.15;
+        transform: scale(0.5) rotate(0deg);
     }
-
     50% {
-        opacity: 0.95;
-        transform: scale(1.25) rotate(45deg);
+        opacity: 1;
+        transform: scale(1.35) rotate(45deg);
     }
 }
 
 @keyframes beamSweep {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: rotate(-5deg) scaleY(1);
         opacity: 0.35;
     }
-
     50% {
         transform: rotate(5deg) scaleY(1.1);
         opacity: 0.65;
     }
 }
 
-.animate-fade-in-up {
-    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes orbMoveOne {
+    0%, 100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+    50% {
+        transform: translate(50px, -30px) scale(1.2);
+    }
 }
 
-.animate-float {
-    animation: floatSlow 6s ease-in-out infinite;
+@keyframes orbMoveTwo {
+    0%, 100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+    50% {
+        transform: translate(-40px, 40px) scale(1.15);
+    }
 }
 
-.animate-pulse-glow {
-    animation: pulseGlow 2.5s infinite;
+.animate-beam {
+    animation: beamSweep 10s ease-in-out infinite;
 }
 
 .animate-orb-1 {
@@ -111,30 +122,17 @@
 }
 
 .animate-sparkle-1 {
-    animation: sparkleTwinkle 2.5s ease-in-out infinite;
+    animation: sparkleTwinkle 2.2s ease-in-out infinite;
 }
 
 .animate-sparkle-2 {
-    animation: sparkleTwinkle 3.8s ease-in-out infinite 0.7s;
+    animation: sparkleTwinkle 3.2s ease-in-out infinite 0.6s;
 }
 
 .animate-sparkle-3 {
-    animation: sparkleTwinkle 3.1s ease-in-out infinite 1.4s;
+    animation: sparkleTwinkle 2.7s ease-in-out infinite 1.2s;
 }
 
 .animate-sparkle-4 {
-    animation: sparkleTwinkle 4.2s ease-in-out infinite 2.1s;
-}
-
-.animate-beam {
-    animation: beamSweep 10s ease-in-out infinite;
-}
-
-.card-hover-effect {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.card-hover-effect:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px -6px rgba(74, 46, 31, 0.12);
+    animation: sparkleTwinkle 3.7s ease-in-out infinite 1.8s;
 }

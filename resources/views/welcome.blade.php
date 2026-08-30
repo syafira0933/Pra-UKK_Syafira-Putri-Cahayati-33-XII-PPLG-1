@@ -12,7 +12,11 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-[#FAF7F2] text-gray-800" x-data="{ mobileMenu: false }">
+<body class="font-sans antialiased bg-[#FAF7F2] text-gray-800 relative overflow-x-hidden" x-data="{ mobileMenu: false }">
+
+    {{-- ===== CURSOR GLOW SPOTLIGHT ===== --}}
+    <div id="cursor-glow" class="pointer-events-none fixed top-0 left-0 w-[300px] h-[300px] rounded-full z-20 opacity-0 transition-opacity duration-300 ease-out"
+         style="background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(122, 75, 42, 0.08) 50%, transparent 75%);"></div>
 
     {{-- ===== NAVBAR ===== --}}
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-krem-dark/30 shadow-2xs">
@@ -44,7 +48,7 @@
                     <a href="{{ route('register') }}" class="text-xs font-medium text-gray-700 hover:text-coklat px-3 py-2">Daftar</a>
                 @endauth
                 <a href="{{ auth()->check() ? route('bookings.create') : route('register') }}"
-                   class="bg-coklat hover:bg-coklat-dark text-white text-xs font-medium px-5 py-2.5 rounded-2xl transition-all shadow-xs hover:shadow-md">
+                   class="bg-coklat hover:bg-coklat-dark text-white text-xs font-medium px-5 py-2.5 rounded-2xl transition-all shadow-xs hover:shadow-md hover:scale-105 active:scale-95">
                     Booking Sekarang
                 </a>
             </div>
@@ -93,7 +97,7 @@
                    class="bg-gradient-to-r from-coklat-dark to-coklat text-white font-semibold px-6 py-3.5 rounded-2xl text-xs hover:shadow-lg hover:scale-105 active:scale-95 transition-all shadow-md">
                     Booking Sekarang
                 </a>
-                <a href="#cara-pemesanan" class="bg-white border border-krem-dark/50 text-gray-700 font-medium px-6 py-3.5 rounded-2xl text-xs hover:bg-krem-light transition-all">
+                <a href="#cara-pemesanan" class="bg-white border border-krem-dark/50 text-gray-700 font-medium px-6 py-3.5 rounded-2xl text-xs hover:bg-krem-light hover:scale-105 transition-all">
                     Cara Pemesanan 
                 </a>
             </div>
@@ -123,7 +127,7 @@
                         <i class="fa-solid fa-circle-check text-emerald-500"></i>
                         <span>2. Pengukuran & Fitting Selesai</span>
                     </div>
-                    <div class="flex items-center gap-2.5 text-coklat font-semibold bg-krem/60 p-2.5 rounded-xl border border-krem-dark/40 animate-pulse-soft">
+                    <div class="flex items-center gap-2.5 text-coklat font-semibold bg-krem/60 p-2.5 rounded-xl border border-krem-dark/40">
                         <i class="fa-solid fa-scissors text-coklat"></i>
                         <span>3. Sedang Dalam Proses Penjahitan</span>
                     </div>
@@ -133,7 +137,7 @@
     </section>
 
     {{-- ===== TENTANG KAMI ===== --}}
-    <section id="tentang" class="bg-white border-y border-krem-dark/30 py-16 sm:py-24">
+    <section id="tentang" class="bg-white border-y border-krem-dark/30 py-16 sm:py-24 reveal-on-scroll">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
             <div class="grid grid-cols-2 gap-5 order-2 lg:order-1">
                 <div class="bg-[#FAF7F2] rounded-3xl p-6 text-center border border-krem-dark/30 card-hover-effect">
@@ -170,7 +174,7 @@
     </section>
 
     {{-- ===== LAYANAN ===== --}}
-    <section id="layanan" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-10">
+    <section id="layanan" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-10 reveal-on-scroll">
         <div class="text-center space-y-2 max-w-xl mx-auto">
             <span class="text-xs font-medium text-emas tracking-wider uppercase">Katalog Layanan</span>
             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900">Apa Yang Bisa Kami Jahitkan Untukmu</h2>
@@ -197,8 +201,9 @@
                         </div>
                         <div class="px-6 pb-6 pt-2">
                             <a href="{{ auth()->check() ? route('bookings.create') : route('register') }}"
-                               class="text-xs font-medium text-coklat hover:text-coklat-dark inline-flex items-center gap-1">
-                                <span>Pesan Layanan Ini</span> &rarr;
+                               class="text-xs font-medium text-coklat hover:text-coklat-dark inline-flex items-center gap-1 group">
+                                <span>Pesan Layanan Ini</span>
+                                <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                             </a>
                         </div>
                     </div>
@@ -208,7 +213,7 @@
     </section>
 
     {{-- ===== CARA PEMESANAN ===== --}}
-    <section id="cara-pemesanan" class="bg-white border-y border-krem-dark/30 py-16 sm:py-24">
+    <section id="cara-pemesanan" class="bg-white border-y border-krem-dark/30 py-16 sm:py-24 reveal-on-scroll">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center space-y-2 max-w-xl mx-auto">
                 <span class="text-xs font-medium text-emas tracking-wider uppercase">Cara Pemesanan</span>
@@ -252,7 +257,7 @@
     </section>
 
     {{-- ===== FAQ ===== --}}
-    <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-10">
+    <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-10 reveal-on-scroll">
         <div class="text-center space-y-2">
             <span class="text-xs font-medium text-emas tracking-wider uppercase">FAQ</span>
             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900">Pertanyaan Yang Sering Diajukan</h2>
@@ -268,7 +273,7 @@
             @endphp
 
             @foreach ($faqs as $index => $faq)
-                <div class="bg-white border border-krem-dark/40 rounded-2xl overflow-hidden shadow-2xs">
+                <div class="bg-white border border-krem-dark/40 rounded-2xl overflow-hidden shadow-2xs card-hover-effect">
                     <button @click="open = open === {{ $index }} ? null : {{ $index }}"
                             class="w-full flex items-center justify-between text-left px-6 py-5">
                         <span class="text-xs font-semibold text-gray-900">{{ $faq['q'] }}</span>
@@ -284,7 +289,7 @@
     </section>
 
     {{-- ===== KONTAK & FOOTER ===== --}}
-    <footer id="kontak" class="bg-gradient-to-r from-coklat-dark via-[#3D2518] to-coklat text-white py-16 border-t border-emas/20">
+    <footer id="kontak" class="bg-gradient-to-r from-coklat-dark via-[#3D2518] to-coklat text-white py-16 border-t border-emas/20 reveal-on-scroll">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="grid lg:grid-cols-2 gap-10 items-center border-b border-white/10 pb-12">
                 <div class="space-y-4">
@@ -310,6 +315,70 @@
             </div>
         </div>
     </footer>
+
+    {{-- Script Spotlight Cursor & Scroll Reveal --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Focused Cursor Glow (Cahaya lembut di belakang kursor)
+            const glow = document.getElementById('cursor-glow');
+            let mouseX = -1000, mouseY = -1000;
+            let currentX = -1000, currentY = -1000;
+            let isMoving = false;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!isMoving) {
+                    glow.style.opacity = '1';
+                    isMoving = true;
+                }
+            });
+
+            document.addEventListener('mouseleave', () => {
+                glow.style.opacity = '0';
+                isMoving = false;
+            });
+
+            function renderGlow() {
+                if (isMoving || Math.abs(mouseX - currentX) > 0.1 || Math.abs(mouseY - currentY) > 0.1) {
+                    currentX += (mouseX - currentX) * 0.15;
+                    currentY += (mouseY - currentY) * 0.15;
+                    glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+                }
+                requestAnimationFrame(renderGlow);
+            }
+            requestAnimationFrame(renderGlow);
+
+            // 2. Card Spotlight Hover Effect (Cahaya mengikuti kursor saat menyorot kartu)
+            const updateCardSpotlight = (card, e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            };
+
+            document.querySelectorAll('.card-hover-effect').forEach(card => {
+                card.addEventListener('mousemove', (e) => updateCardSpotlight(card, e));
+            });
+
+            // 3. Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.08,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
 
 </body>
 </html>

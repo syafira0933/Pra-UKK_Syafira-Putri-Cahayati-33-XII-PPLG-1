@@ -21,7 +21,7 @@
                        class="w-full pl-10 text-xs border-krem-dark/60 rounded-xl focus:border-coklat focus:ring-coklat bg-white p-3">
             </div>
             <select name="status" onchange="this.form.submit()"
-                    class="text-xs border-krem-dark/60 rounded-xl focus:border-coklat focus:ring-coklat bg-white p-3">
+                    class="text-xs border-krem-dark/60 rounded-xl focus:border-coklat focus:ring-coklat bg-white py-3 pl-4 pr-10 min-w-[190px] shadow-2xs font-medium text-gray-800">
                 <option value="">Semua Status</option>
                 @foreach (['menunggu_konfirmasi', 'dikonfirmasi', 'pengukuran_selesai', 'sedang_dijahit', 'siap_diambil', 'selesai'] as $status)
                     <option value="{{ $status }}" {{ request('status') === $status ? 'selected' : '' }}>

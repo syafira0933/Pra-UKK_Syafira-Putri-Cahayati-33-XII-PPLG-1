@@ -320,7 +320,7 @@
                         {{-- Catatan --}}
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 mb-1.5">Catatan Khusus Penjahit (Opsional)</label>
-                            <textarea name="notes" rows="2" placeholder="Tuliskan keinginan khusus seputar bahan, furing, kerut, atau potong..."
+                            <textarea name="notes" rows="2" placeholder="Contoh: Bawa kain batik sendiri 2,5 meter, minta dibuatkan furing warna coklat."
                                       class="w-full border-krem-dark/60 rounded-xl text-sm focus:border-coklat focus:ring-coklat bg-krem-light/30 p-3">{{ old('notes') }}</textarea>
                         </div>
                     </div>

@@ -69,6 +69,9 @@ class AdminServiceController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            if ($service->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($service->image)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($service->image);
+            }
             $validated['image'] = $request->file('image')->store('services', 'public');
         }
 
@@ -83,6 +86,10 @@ class AdminServiceController extends Controller
      */
     public function destroy(Service $service): RedirectResponse
     {
+        if ($service->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($service->image)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($service->image);
+        }
+
         $service->delete();
 
         return redirect()->route('admin.services.index')

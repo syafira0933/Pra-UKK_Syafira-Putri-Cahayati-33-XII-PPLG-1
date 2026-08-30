@@ -61,37 +61,43 @@
                     </div>
                 @endif
 
-                <hr class="my-3 border-krem-dark/20">
+                <div class="pt-4 border-t border-krem-dark/20 space-y-5">
+                    {{-- Form ubah status --}}
+                    <div class="p-4 bg-[#FAF7F2] border border-krem-dark/30 rounded-2xl space-y-3">
+                        <label for="status-select" class="block font-semibold text-xs text-gray-900">
+                            Ubah Status Pengerjaan:
+                        </label>
+                        <form method="POST" action="{{ route('admin.bookings.updateStatus', $booking) }}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            @csrf
+                            @method('PATCH')
+                            <select id="status-select" name="status" class="text-xs border-krem-dark/60 rounded-xl focus:border-coklat focus:ring-coklat bg-white p-3 pr-8 min-w-[200px] shadow-2xs font-medium text-gray-800">
+                                @foreach (['menunggu_konfirmasi', 'dikonfirmasi', 'pengukuran_selesai', 'sedang_dijahit', 'siap_diambil', 'selesai'] as $status)
+                                    <option value="{{ $status }}" {{ $booking->status === $status ? 'selected' : '' }}>
+                                        {{ ucwords(str_replace('_', ' ', $status)) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="bg-gradient-to-r from-coklat-dark to-coklat hover:from-coklat hover:to-coklat-dark text-white text-xs font-semibold px-5 py-3 rounded-xl hover:shadow-md transition-all shadow-xs shrink-0">
+                                Update Status
+                            </button>
+                        </form>
+                    </div>
 
-                {{-- Form ubah status --}}
-                <form method="POST" action="{{ route('admin.bookings.updateStatus', $booking) }}" class="flex flex-wrap items-center gap-3 pt-1">
-                    @csrf
-                    @method('PATCH')
-                    <label class="font-semibold text-xs text-gray-900">Ubah Status:</label>
-                    <select name="status" class="text-xs border-krem-dark/60 rounded-xl focus:border-coklat focus:ring-coklat bg-white p-2.5">
-                        @foreach (['menunggu_konfirmasi', 'dikonfirmasi', 'pengukuran_selesai', 'sedang_dijahit', 'siap_diambil', 'selesai'] as $status)
-                            <option value="{{ $status }}" {{ $booking->status === $status ? 'selected' : '' }}>
-                                {{ ucwords(str_replace('_', ' ', $status)) }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="bg-gradient-to-r from-coklat-dark to-coklat text-white text-xs font-semibold px-5 py-2.5 rounded-xl hover:shadow-md transition-all shadow-xs">
-                        Update Status
-                    </button>
-                </form>
+                    {{-- Action Footer --}}
+                    <div class="flex items-center justify-between pt-1">
+                        <a href="{{ route('admin.bookings.index') }}" class="text-xs font-semibold text-coklat hover:text-coklat-dark hover:underline inline-flex items-center gap-1">
+                            &larr; Kembali ke Data Booking
+                        </a>
 
-                {{-- Hapus booking --}}
-                <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST"
-                      onsubmit="return confirm('Yakin ingin menghapus booking ini?')" class="pt-2">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-600 hover:underline text-xs font-medium">Hapus Booking</button>
-                </form>
-
-                <div class="pt-4 border-t border-krem-dark/20">
-                    <a href="{{ route('admin.bookings.index') }}" class="text-xs font-semibold text-coklat hover:underline">
-                        &larr; Kembali ke Data Booking
-                    </a>
+                        <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST"
+                              onsubmit="return confirm('Yakin ingin menghapus booking ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-xs font-medium text-red-600 hover:text-red-700 hover:underline inline-flex items-center gap-1">
+                                <i class="fa-solid fa-trash-can text-xs"></i> Hapus Booking
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
