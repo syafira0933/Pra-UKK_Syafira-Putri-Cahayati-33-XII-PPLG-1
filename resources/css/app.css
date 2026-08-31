@@ -136,3 +136,12 @@
 .animate-sparkle-4 {
     animation: sparkleTwinkle 3.7s ease-in-out infinite 1.8s;
 }
+
+/* Hide scrollbar for Chrome, Safari, Edge, Firefox */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

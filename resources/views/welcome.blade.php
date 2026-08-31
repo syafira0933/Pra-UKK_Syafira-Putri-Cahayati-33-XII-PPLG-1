@@ -185,25 +185,27 @@
                 Layanan akan segera ditambahkan oleh admin.
             </div>
         @else
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex overflow-x-auto gap-6 pb-2 pt-1 snap-x snap-mandatory no-scrollbar scroll-smooth [::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]" style="-webkit-overflow-scrolling: touch;">
                 @foreach ($services as $service)
-                    <div class="bg-white border border-krem-dark/40 rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all card-hover-effect flex flex-col justify-between">
+                    <div class="snap-start shrink-0 w-[290px] sm:w-[340px] bg-white border border-krem-dark/40 rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all card-hover-effect flex flex-col justify-between group">
                         @if ($service->image)
-                            <img src="{{ Storage::url($service->image) }}" class="w-full h-48 object-cover">
+                            <div class="w-full h-64 sm:h-72 bg-white flex items-center justify-center p-2 border-b border-krem-dark/20 overflow-hidden">
+                                <img src="{{ Storage::url($service->image) }}" class="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            </div>
                         @else
-                            <div class="w-full h-44 bg-krem/40 flex items-center justify-center text-coklat">
+                            <div class="w-full h-64 sm:h-72 bg-krem/40 flex flex-col items-center justify-center text-coklat gap-2">
                                 <i class="fa-solid fa-shirt text-3xl"></i>
+                                <span class="text-[11px] text-coklat/60">Belum ada foto</span>
                             </div>
                         @endif
                         <div class="p-6 space-y-2">
                             <h3 class="font-semibold text-gray-900 text-base">{{ $service->name }}</h3>
-                            <p class="text-xs text-gray-500 leading-relaxed font-normal">{{ Str::limit($service->description, 90) }}</p>
+                            <p class="text-xs text-gray-500 leading-relaxed font-normal">{{ $service->description }}</p>
                         </div>
                         <div class="px-6 pb-6 pt-2">
                             <a href="{{ auth()->check() ? route('bookings.create') : route('register') }}"
                                class="text-xs font-medium text-coklat hover:text-coklat-dark inline-flex items-center gap-1 group">
                                 <span>Pesan Layanan Ini</span>
-                                <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
                             </a>
                         </div>
                     </div>

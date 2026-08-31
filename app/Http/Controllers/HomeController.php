@@ -20,7 +20,7 @@ class HomeController extends Controller
         }
 
         // 2. Query database hanya dijalankan jika pengakses BUKAN admin
-        $services = Service::latest()->take(3)->get();
+        $services = Service::latest()->get();
 
         // 3. Tampilkan view 'home' jika sudah login, atau 'welcome' jika guest
         $viewName = auth()->check() ? 'home' : 'welcome';
