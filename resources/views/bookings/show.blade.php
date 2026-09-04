@@ -14,6 +14,18 @@
             {{-- Container Utama Tiket Simpatik Tailor --}}
             <div class="bg-white rounded-3xl shadow-sm border border-krem-dark/40 overflow-hidden relative">
                 
+                @php
+                    $headerBadgeColor = match($booking->status) {
+                        'menunggu_konfirmasi' => 'bg-amber-100 text-amber-900 border-amber-300 font-bold shadow-xs',
+                        'dikonfirmasi' => 'bg-blue-100 text-blue-900 border-blue-300 font-bold shadow-xs',
+                        'pengukuran_selesai' => 'bg-indigo-100 text-indigo-900 border-indigo-300 font-bold shadow-xs',
+                        'sedang_dijahit' => 'bg-sky-100 text-sky-900 border-sky-300 font-bold shadow-xs',
+                        'siap_diambil' => 'bg-teal-100 text-teal-900 border-teal-300 font-bold shadow-xs',
+                        'selesai' => 'bg-emerald-100 text-emerald-900 border-emerald-300 font-bold shadow-xs',
+                        default => 'bg-white text-gray-900 border-gray-300 font-bold shadow-xs'
+                    };
+                @endphp
+
                 {{-- Header Tiket Digital --}}
                 <div class="bg-gradient-to-r from-coklat-dark via-[#3D2518] to-coklat p-8 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emas/20">
                     <div>
@@ -23,7 +35,7 @@
                         <h1 class="text-xl sm:text-2xl font-semibold text-white">{{ $booking->booking_code }}</h1>
                         <p class="text-xs text-krem/80 mt-1 font-normal">Dibuat pada {{ $booking->created_at->setTimezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</p>
                     </div>
-                    <span class="px-4 py-2 rounded-2xl text-xs font-semibold uppercase tracking-wider bg-white/10 text-white border border-white/20 self-start sm:self-auto">
+                    <span class="px-4 py-2 rounded-2xl text-xs font-semibold uppercase tracking-wider border {{ $headerBadgeColor }} self-start sm:self-auto shadow-xs">
                         {{ ucwords(str_replace('_', ' ', $booking->status)) }}
                     </span>
                 </div>
@@ -57,12 +69,11 @@
                         @foreach ($statuses as $key => $item)
                             @php
                                 $loopIdx = array_search($key, array_keys($statuses));
-                                $isDone = $loopIdx <= $currentIndex;
+                                $isPast = $loopIdx < $currentIndex;
                                 $isCurrent = $loopIdx === $currentIndex;
                             @endphp
-                            <div class="flex flex-col items-center text-center p-2.5 rounded-xl border transition-all"
-                                 class="{{ $isCurrent ? 'bg-coklat text-white border-coklat font-semibold shadow-xs' : ($isDone ? 'bg-krem/70 border-krem-dark text-coklat font-medium' : 'bg-white border-krem-dark/30 text-gray-400') }}">
-                                <div class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] mb-1 {{ $isCurrent ? 'bg-white text-coklat' : ($isDone ? 'bg-coklat text-white' : 'bg-gray-100 text-gray-400') }}">
+                            <div class="flex flex-col items-center text-center p-2.5 rounded-xl border transition-all {{ $isCurrent ? 'bg-coklat text-white border-coklat font-semibold shadow-xs' : ($isPast ? 'bg-white border-krem-dark/40 text-gray-700 font-medium' : 'bg-white border-krem-dark/20 text-gray-400') }}">
+                                <div class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] mb-1 {{ $isCurrent ? 'bg-white text-coklat' : ($isPast ? 'bg-coklat text-white' : 'bg-gray-100 text-gray-400') }}">
                                     <i class="fa-solid {{ $item['icon'] }}"></i>
                                 </div>
                                 <span class="text-[10px] leading-tight">{{ $item['label'] }}</span>
@@ -87,6 +98,13 @@
                             <span class="text-gray-400 font-medium block">Jenis Layanan</span>
                             <span class="text-sm font-semibold text-gray-900 block">
                                 {{ $booking->service_type === 'Lainnya' ? $booking->other_service_type : $booking->service_type }}
+                            </span>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-krem-light/40 border border-krem-dark/30 space-y-1">
+                            <span class="text-gray-400 font-medium block">Asal / Sumber Bahan Kain</span>
+                            <span class="text-sm font-semibold text-gray-900 block">
+                                {{ $booking->fabricSourceLabel() }}
                             </span>
                         </div>
 
@@ -122,10 +140,117 @@
 
                         @if ($booking->notes)
                             <div class="p-4 rounded-2xl bg-krem-light/40 border border-krem-dark/30 space-y-1 md:col-span-2">
-                                <span class="text-gray-400 font-medium block">Catatan Tambahan Penjahit</span>
+                                <span class="text-gray-400 font-medium block">Catatan Tambahan Pelanggan</span>
                                 <p class="text-xs text-gray-700 italic bg-white p-3 rounded-xl border border-krem-dark/20 font-normal">
                                     "{{ $booking->notes }}"
                                 </p>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- Rincian Hasil Pengukuran Busana (Diisi Penjahit / Admin) --}}
+                    @php
+                        $isMeasurementDone = in_array($booking->status, ['pengukuran_selesai', 'sedang_dijahit', 'siap_diambil', 'selesai']) && $booking->hasMeasurements();
+                    @endphp
+
+                    <div class="pt-4 border-t border-krem-dark/20 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider block">
+                                <i class="fa-solid fa-ruler-vertical text-coklat mr-1"></i> Spesifikasi Ukuran Busana (Penjahit)
+                            </span>
+                            @if ($isMeasurementDone)
+                                <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/80">
+                                    <i class="fa-solid fa-check-double text-[9px] mr-1"></i> Telah Diukur Penjahit
+                                </span>
+                            @else
+                                <span class="text-[10px] font-medium text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/80">
+                                    <i class="fa-solid fa-clock text-[9px] mr-1"></i> Belum Diisi Penjahit
+                                </span>
+                            @endif
+                        </div>
+
+                        @if ($isMeasurementDone)
+                            <div class="space-y-4">
+                                {{-- Sub-bagian 1: Ukuran Baju / Atasan --}}
+                                @if ($booking->lingkar_dada || $booking->lebar_bahu || $booking->panjang_lengan || $booking->panjang_pakaian || $booking->lingkar_pinggang)
+                                    <div class="p-4 rounded-2xl bg-krem-light/40 border border-krem-dark/30 space-y-3">
+                                        <div class="flex items-center gap-2 border-b border-krem-dark/20 pb-2">
+                                            <i class="fa-solid fa-shirt text-coklat text-xs"></i>
+                                            <span class="font-semibold text-xs text-gray-800 uppercase tracking-wider">1. Ukuran Baju / Atasan</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                                            @if ($booking->lingkar_dada)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Lingkar Dada</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->lingkar_dada }}</span>
+                                                </div>
+                                            @endif
+                                            @if ($booking->lebar_bahu)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Lebar Bahu</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->lebar_bahu }}</span>
+                                                </div>
+                                            @endif
+                                            @if ($booking->panjang_lengan)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Panjang Lengan</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->panjang_lengan }}</span>
+                                                </div>
+                                            @endif
+                                            @if ($booking->panjang_pakaian)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Panjang Baju</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->panjang_pakaian }}</span>
+                                                </div>
+                                            @endif
+                                            @if ($booking->lingkar_pinggang)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Lingkar Pinggang Pakaian</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->lingkar_pinggang }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- Sub-bagian 2: Ukuran Celana / Rok (Bawahan) --}}
+                                @if ($booking->lingkar_pinggul || $booking->panjang_celana_rok)
+                                    <div class="p-4 rounded-2xl bg-krem-light/40 border border-krem-dark/30 space-y-3">
+                                        <div class="flex items-center gap-2 border-b border-krem-dark/20 pb-2">
+                                            <i class="fa-solid fa-vest text-coklat text-xs"></i>
+                                            <span class="font-semibold text-xs text-gray-800 uppercase tracking-wider">2. Ukuran Celana / Rok (Bawahan)</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 text-xs">
+                                            @if ($booking->lingkar_pinggul)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Lingkar Pinggul</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->lingkar_pinggul }}</span>
+                                                </div>
+                                            @endif
+                                            @if ($booking->panjang_celana_rok)
+                                                <div class="p-3 rounded-xl bg-white border border-krem-dark/20 space-y-0.5 shadow-2xs">
+                                                    <span class="text-[11px] text-gray-400 font-medium block">Panjang Celana / Rok</span>
+                                                    <span class="text-sm font-semibold text-gray-900 block">{{ $booking->panjang_celana_rok }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- Catatan Tambahan Ukuran --}}
+                                @if ($booking->catatan_pengukuran)
+                                    <div class="p-3.5 rounded-2xl bg-white border border-krem-dark/30 space-y-1 text-xs shadow-2xs">
+                                        <span class="text-[11px] text-gray-400 font-medium block">Catatan Spesifikasi Penjahit</span>
+                                        <p class="text-xs text-gray-800 leading-relaxed font-normal">
+                                            {{ $booking->catatan_pengukuran }}
+                                        </p>
+                                    </div>
+                                @endif
+                            </div>
+                        @else
+                            <div class="p-4 rounded-2xl bg-krem-light/50 border border-dashed border-krem-dark/40 text-center space-y-1">
+                                <p class="text-xs font-medium text-gray-700">Data ukuran busana belum diinput oleh penjahit.</p>
+                                <p class="text-[11px] text-gray-500 font-normal">Penjahit akan mencatat spesifikasi ukuran setelah proses pengukuran dilakukan.</p>
                             </div>
                         @endif
                     </div>

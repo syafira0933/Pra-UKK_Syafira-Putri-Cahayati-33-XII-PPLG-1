@@ -95,8 +95,8 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-between sm:justify-end gap-3 pt-3 sm:pt-0 border-t sm:border-t-0 border-krem-dark/20">
-                                <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold {{ $booking->statusBadgeClasses() }}">
+                            <div class="flex items-center justify-between sm:justify-end gap-3 pt-3 sm:pt-0 border-t sm:border-t-0 border-krem-dark/20 shrink-0">
+                                <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap inline-flex items-center justify-center shrink-0 {{ $booking->statusBadgeClasses() }}">
                                     {{ ucwords(str_replace('_', ' ', $booking->status)) }}
                                 </span>
                                 <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-coklat transition-colors"></i>

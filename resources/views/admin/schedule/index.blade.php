@@ -31,11 +31,11 @@
                                     <td class="px-4 py-3.5 font-semibold text-coklat">{{ \Carbon\Carbon::parse($booking->booking_time)->format('H:i') }}</td>
                                     <td class="px-4 py-3.5 font-semibold text-gray-900">{{ $booking->booking_code }}</td>
                                     <td class="px-4 py-3.5 font-medium text-gray-800">{{ $booking->user->name }}</td>
-                                    <td class="px-4 py-3.5 text-gray-700">
+                                    <td class="px-4 py-3.5 text-gray-700 whitespace-nowrap">
                                         {{ $booking->measurement_method === 'datang_ke_tempat' ? 'Datang ke Tempat' : 'Di Tempat Pelanggan' }}
                                     </td>
-                                    <td class="px-4 py-3.5">
-                                        <span class="px-3 py-1 rounded-full text-[11px] font-semibold {{ $booking->statusBadgeClasses() }}">
+                                    <td class="px-4 py-3.5 whitespace-nowrap">
+                                        <span class="px-3.5 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap inline-flex items-center justify-center shrink-0 {{ $booking->statusBadgeClasses() }}">
                                             {{ ucwords(str_replace('_', ' ', $booking->status)) }}
                                         </span>
                                     </td>

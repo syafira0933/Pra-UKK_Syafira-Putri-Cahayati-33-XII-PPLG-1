@@ -30,6 +30,8 @@ class StoreBookingRequest extends FormRequest
             'service_type' => 'required|string',
             'other_service_type' => 'required_if:service_type,Lainnya|nullable|string|max:255',
 
+            'fabric_source' => 'required|in:bawa_sendiri,dari_penjahit',
+
             'quantity' => 'required|integer|min:1',
 
             'reference_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',

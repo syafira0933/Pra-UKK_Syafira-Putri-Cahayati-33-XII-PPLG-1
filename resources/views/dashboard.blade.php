@@ -131,8 +131,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex items-center gap-3">
-                                        <span class="px-3 py-1 rounded-full text-xs font-medium {{ $booking->statusBadgeClasses() }}">
+                                    <div class="flex items-center gap-3 shrink-0">
+                                        <span class="px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap inline-flex items-center justify-center shrink-0 {{ $booking->statusBadgeClasses() }}">
                                             {{ ucwords(str_replace('_', ' ', $booking->status)) }}
                                         </span>
                                         <i class="fa-solid fa-chevron-right text-xs text-gray-300 group-hover:text-coklat group-hover:translate-x-1 transition-all"></i>

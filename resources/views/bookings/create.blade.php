@@ -41,6 +41,7 @@
                       x-data="{
                           clothingType: '{{ old('clothing_type') }}',
                           serviceType: '{{ old('service_type') }}',
+                          fabricSource: '{{ old('fabric_source', 'bawa_sendiri') }}',
                           measurementMethod: '{{ old('measurement_method', 'datang_ke_tempat') }}',
                           quantity: {{ old('quantity', 1) }},
                           fileName: '',
@@ -191,6 +192,41 @@
                                    class="w-full border-krem-dark/60 rounded-xl text-sm focus:border-coklat focus:ring-coklat bg-krem-light/30 p-3">
                         </div>
 
+                        {{-- Selection Asal Bahan / Kain --}}
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                                Asal / Sumber Bahan Kain <span class="text-red-500">*</span>
+                            </label>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                <label class="flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all select-none"
+                                       :class="fabricSource === 'bawa_sendiri' ? 'border-emas bg-krem/60 text-coklat-dark font-semibold shadow-xs' : 'border-krem-dark/40 bg-white text-gray-600 hover:border-emas/50'">
+                                    <input type="radio" name="fabric_source" value="bawa_sendiri" x-model="fabricSource" class="hidden">
+                                    <div class="w-9 h-9 rounded-xl flex items-center justify-center text-xs shrink-0"
+                                         :class="fabricSource === 'bawa_sendiri' ? 'bg-coklat text-white shadow-2xs' : 'bg-krem text-coklat'">
+                                        <i class="fa-solid fa-scroll"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-semibold">Bawa Kain / Bahan Sendiri</p>
+                                        <p class="text-[11px] text-gray-400 font-normal mt-0.5">Pelanggan membawa kain sendiri saat pengukuran</p>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-3.5 p-4 rounded-2xl border cursor-pointer transition-all select-none"
+                                       :class="fabricSource === 'dari_penjahit' ? 'border-emas bg-krem/60 text-coklat-dark font-semibold shadow-xs' : 'border-krem-dark/40 bg-white text-gray-600 hover:border-emas/50'">
+                                    <input type="radio" name="fabric_source" value="dari_penjahit" x-model="fabricSource" class="hidden">
+                                    <div class="w-9 h-9 rounded-xl flex items-center justify-center text-xs shrink-0"
+                                         :class="fabricSource === 'dari_penjahit' ? 'bg-coklat text-white shadow-2xs' : 'bg-krem text-coklat'">
+                                        <i class="fa-solid fa-store"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-semibold">Bahan dari Penjahit / Toko</p>
+                                        <p class="text-[11px] text-gray-400 font-normal mt-0.5">Menggunakan bahan dari Simpatik Tailor</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
                         {{-- Jumlah Pakaian --}}
                         <div>
                             <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
@@ -320,7 +356,7 @@
                         {{-- Catatan --}}
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 mb-1.5">Catatan Khusus Penjahit (Opsional)</label>
-                            <textarea name="notes" rows="2" placeholder="Contoh: Bawa kain batik sendiri 2,5 meter, minta dibuatkan furing warna coklat."
+                            <textarea name="notes" rows="2" placeholder="Contoh: Potongan baju minta agak longgar (tidak press body) & lingkar lengan tidak ketat."
                                       class="w-full border-krem-dark/60 rounded-xl text-sm focus:border-coklat focus:ring-coklat bg-krem-light/30 p-3">{{ old('notes') }}</textarea>
                         </div>
                     </div>

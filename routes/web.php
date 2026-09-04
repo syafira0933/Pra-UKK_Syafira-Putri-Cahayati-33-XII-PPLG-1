@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/bookings', [AdminBookingController::class, 'index'])->name('bookings.index');
         Route::get('/bookings/{booking}', [AdminBookingController::class, 'show'])->name('bookings.show');
         Route::patch('/bookings/{booking}/status', [AdminBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+        Route::patch('/bookings/{booking}/measurements', [AdminBookingController::class, 'updateMeasurements'])->name('bookings.updateMeasurements');
         Route::delete('/bookings/{booking}', [AdminBookingController::class, 'destroy'])->name('bookings.destroy');
     });
 });

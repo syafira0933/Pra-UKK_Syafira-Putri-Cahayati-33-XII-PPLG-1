@@ -47,22 +47,22 @@
                             <th class="px-4 py-3.5">No. HP</th>
                             <th class="px-4 py-3.5">Jenis Pakaian</th>
                             <th class="px-4 py-3.5">Jumlah</th>
-                            <th class="px-4 py-3.5">Tanggal</th>
-                            <th class="px-4 py-3.5">Status</th>
-                            <th class="px-4 py-3.5 text-right">Aksi</th>
+                            <th class="px-4 py-3.5 whitespace-nowrap">Tanggal</th>
+                            <th class="px-4 py-3.5 whitespace-nowrap">Status</th>
+                            <th class="px-4 py-3.5 text-right whitespace-nowrap">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-krem-dark/20">
                         @forelse ($bookings as $booking)
                             <tr class="hover:bg-krem-light/40 transition-colors">
-                                <td class="px-4 py-3.5 font-semibold text-gray-900">{{ $booking->booking_code }}</td>
-                                <td class="px-4 py-3.5 font-medium text-gray-800">{{ $booking->user->name }}</td>
-                                <td class="px-4 py-3.5 text-gray-600">{{ $booking->user->phone ?? '-' }}</td>
-                                <td class="px-4 py-3.5 text-gray-700">{{ $booking->clothing_type === 'Lainnya' ? $booking->other_clothing_type : $booking->clothing_type }}</td>
-                                <td class="px-4 py-3.5 font-medium text-gray-800">{{ $booking->quantity }}</td>
-                                <td class="px-4 py-3.5 text-gray-600">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                                <td class="px-4 py-3.5">
-                                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold {{ $booking->statusBadgeClasses() }}">
+                                <td class="px-4 py-3.5 font-semibold text-gray-900 whitespace-nowrap">{{ $booking->booking_code }}</td>
+                                <td class="px-4 py-3.5 font-medium text-gray-800 whitespace-nowrap">{{ $booking->user->name }}</td>
+                                <td class="px-4 py-3.5 text-gray-600 whitespace-nowrap">{{ $booking->user->phone ?? '-' }}</td>
+                                <td class="px-4 py-3.5 text-gray-700 whitespace-nowrap">{{ $booking->clothing_type === 'Lainnya' ? $booking->other_clothing_type : $booking->clothing_type }}</td>
+                                <td class="px-4 py-3.5 font-medium text-gray-800 whitespace-nowrap">{{ $booking->quantity }}</td>
+                                <td class="px-4 py-3.5 text-gray-600 whitespace-nowrap">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
+                                <td class="px-4 py-3.5 whitespace-nowrap">
+                                    <span class="px-3.5 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap inline-flex items-center justify-center shrink-0 {{ $booking->statusBadgeClasses() }}">
                                         {{ ucwords(str_replace('_', ' ', $booking->status)) }}
                                     </span>
                                 </td>
