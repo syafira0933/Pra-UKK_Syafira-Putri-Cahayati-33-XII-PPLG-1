@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Atribut yang dapat diisi secara massal (mass assignable).
@@ -16,21 +17,21 @@ class Booking extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'booking_code',
+        'booking_code', // kode booking unik
         'user_id',
-        'clothing_type',
-        'other_clothing_type',
-        'service_type',
-        'other_service_type',
-        'fabric_source',
-        'quantity',
-        'measurement_method',
-        'address',
-        'booking_date',
-        'booking_time',
-        'reference_image',
-        'notes',
-        'status',
+        'clothing_type', //jenis pakaian
+        'other_clothing_type', // jenis pakaian lain
+        'service_type', // jenis layanan
+        'other_service_type', // jenis layanan lain
+        'fabric_source', // sumber bahan/kain
+        'quantity', // jumlah pakaian
+        'measurement_method', // metode pengukuran
+        'address', // alamat pengukuran
+        'booking_date', // tanggal booking
+        'booking_time', // waktu booking
+        'reference_image', // gambar referensi
+        'notes', // catatan
+        'status', // status booking
         'lingkar_dada',
         'lingkar_pinggang',
         'lingkar_pinggul',

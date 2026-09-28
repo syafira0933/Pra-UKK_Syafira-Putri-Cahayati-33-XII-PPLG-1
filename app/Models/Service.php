@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * Atribut yang dapat diisi secara massal (mass assignable).
@@ -15,7 +16,7 @@ class Service extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'name', 
         'description',
         'image',
     ];
